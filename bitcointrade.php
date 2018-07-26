@@ -2,8 +2,9 @@
 
 class BitcoinTrade
 {
+  private const API_URL = 'https://api.bitcointrade.com.br/v1';
+
   protected $apiKey = null;
-  protected $urlBase = "https://api.bitcointrade.com.br/v1";
 
   public function __construct()
   {
@@ -48,7 +49,7 @@ class BitcoinTrade
     $end_time = date_format($end_time, DateTime::ATOM);
 
     $apiURL = "/public/{$currency}/trades?start_time={$start_time}&end_time={$end_time}&page_size={$page_size}&current_page={$current_page}";
-    
+
     return $this->initCurl($apiURL);
   }
 
@@ -159,7 +160,7 @@ class BitcoinTrade
     }
 
     $options = [
-      CURLOPT_URL => $this->urlBase.$url,
+      CURLOPT_URL => self::API_URL . $url,
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => '',
       CURLOPT_MAXREDIRS => 10,
@@ -173,7 +174,7 @@ class BitcoinTrade
     curl_setopt_array($curl, $options);
 
     $response = curl_exec($curl);
-    
+
     $err = curl_error($curl);
 
     curl_close($curl);
