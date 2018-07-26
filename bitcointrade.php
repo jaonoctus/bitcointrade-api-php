@@ -2,17 +2,37 @@
 
 class BitcoinTrade
 {
+  /**
+   * API url with the version.
+   *
+   * @link  https://apidocs.bitcointrade.com.br/#intro
+   * @var   string
+   */
   private const API_URL = 'https://api.bitcointrade.com.br/v1';
 
+  /**
+   * User API token used in Authorization Header.
+   *
+   * @var string
+   */
   protected $apiKey = null;
 
+  /**
+   * Create a new BitcoinTrade instance.
+   */
   public function __construct()
   {
     $arguments = func_get_args();
     $this->apiKey = $arguments[0];
   }
 
-  // API Documentation: https://apidocs.bitcointrade.com.br/#8e6f6b73-b2f8-c03a-9d60-a0159f2c6ce0
+  /**
+   * Fetch information with the summary of the last 24 hours of a currency trades.
+   *
+   * @link    https://apidocs.bitcointrade.com.br/#8e6f6b73-b2f8-c03a-9d60-a0159f2c6ce0
+   * @param   string $currency
+   * @return  string
+   */
   public function ticker($currency = 'BTC')
   {
     $apiPath = "/public/{$currency}/ticker";
@@ -20,7 +40,13 @@ class BitcoinTrade
     return $this->initCurl($apiPath);
   }
 
-  // API Documentation: https://apidocs.bitcointrade.com.br/#dc3695f5-6129-e35c-153d-c629aee8fd48
+  /**
+   * Lists the currently active orders of a currency in the order book.
+   *
+   * @link    https://apidocs.bitcointrade.com.br/#dc3695f5-6129-e35c-153d-c629aee8fd48
+   * @param   string $currency
+   * @return  string
+   */
   public function orders($currency = 'BTC')
   {
     $apiPath = "/public/{$currency}/orders";
@@ -28,7 +54,16 @@ class BitcoinTrade
     return $this->initCurl($apiPath);
   }
 
-  // API Documentation: https://apidocs.bitcointrade.com.br/#9fe41816-3d20-e53e-9273-643c95279dc4
+  /**
+   * Lists the trades based on search criteria.
+   *
+   * @link    https://apidocs.bitcointrade.com.br/#9fe41816-3d20-e53e-9273-643c95279dc4
+   * @param   string  $currency
+   * @param   int     $hours
+   * @param   int     $page_size
+   * @param   int     $current_page
+   * @return  string
+   */
   public function trades(
     $currency = 'BTC',
     $hours = 1,
@@ -53,7 +88,13 @@ class BitcoinTrade
     return $this->initCurl($apiPath);
   }
 
-  // API Documentation: https://apidocs.bitcointrade.com.br/#7aa82620-f7a2-7688-3081-bbb95afc3be3
+  /**
+   * Fetch buy and sell orders information of a currency.
+   *
+   * @link    https://apidocs.bitcointrade.com.br/#7aa82620-f7a2-7688-3081-bbb95afc3be3
+   * @param   string $currency
+   * @return  string
+   */
   public function orderbook($currency = 'BTC')
   {
     $apiPath = "/market?currency={$currency}";
@@ -62,7 +103,13 @@ class BitcoinTrade
     return $this->initCurl($apiPath, $apiKeyRequired);
   }
 
-  // API Documentation: https://apidocs.bitcointrade.com.br/#9a20d5e9-056b-7427-5f22-35f571f60411
+  /**
+   * Fetch the summary of a currency in the last 24 hours.
+   *
+   * @link    https://apidocs.bitcointrade.com.br/#9a20d5e9-056b-7427-5f22-35f571f60411
+   * @param   string $currency
+   * @return  string
+   */
   public function summary($currency = 'BTC')
   {
     $apiPath = "/market/summary?currency={$currency}";
@@ -71,12 +118,23 @@ class BitcoinTrade
     return $this->initCurl($apiPath, $apiKeyRequired);
   }
 
-  // API Documentation: https://apidocs.bitcointrade.com.br/#989dcc17-e4fa-1262-fa35-589d47dd6b43
+  /**
+   * Fetch information from the user's buy and sell orders.
+   *
+   * @link  https://apidocs.bitcointrade.com.br/#989dcc17-e4fa-1262-fa35-589d47dd6b43
+   * @param   string  $currency
+   * @param   string  $status
+   * @param   int     $hours
+   * @param   string  $type
+   * @param   int     $page_size
+   * @param   int     $current_page
+   * @return  string
+   */
   public function userOrders(
-    $currency = "BTC",
-    $status = "executed_completely",
+    $currency = 'BTC',
+    $status = 'executed_completely',
     $hours = 24,
-    $type = "buy",
+    $type = 'buy',
     $page_size = 100,
     $current_page = 1
   ) {
